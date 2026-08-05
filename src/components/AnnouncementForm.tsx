@@ -129,6 +129,9 @@ export default function AnnouncementForm({
   }
 
   async function handleSend() {
+    if (!confirm(`Send this announcement to ${recipients.length} recipient(s)?`)) {
+      return;
+    }
     setError('');
     setSending(true);
     try {
