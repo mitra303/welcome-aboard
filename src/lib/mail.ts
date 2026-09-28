@@ -18,11 +18,13 @@ export async function sendMail(opts: {
   subject: string;
   html: string;
   attachments?: { filename: string; path: string; cid?: string }[];
+  includeAlwaysCc?: boolean;
 }) {
   const transporter = getTransporter();
-  const alwaysTo = process.env.MAIL_TO_ALWAYS
-    ? process.env.MAIL_TO_ALWAYS.split(',').map((e) => e.trim()).filter(Boolean)
-    : [];
+  const alwaysTo =
+    opts.includeAlwaysCc !== false && process.env.MAIL_TO_ALWAYS
+      ? process.env.MAIL_TO_ALWAYS.split(',').map((e) => e.trim()).filter(Boolean)
+      : [];
   const toList = Array.from(new Set([...opts.to, ...alwaysTo]));
   return transporter.sendMail({
     from: `"MITRA" <${process.env.MAIL_USER}>`,

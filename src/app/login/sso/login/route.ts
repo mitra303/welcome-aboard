@@ -3,7 +3,7 @@ import { connectDB } from '@/lib/db';
 import User from '@/models/User';
 import { hashPassword, signSession, setSessionCookie } from '@/lib/auth';
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://115.241.45.146:8035';
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://14.99.235.114:8035';
 const DEFAULT_SSO_PASSWORD = 'Employee@1234';
 
 function redirect(path: string) {
@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
     return redirect('/login?error=missing_token');
   }
 
-  const mainAppUrl = process.env.SSO_MAIN_APP_URL || 'http://115.241.45.146:8016';
+  const mainAppUrl = process.env.SSO_MAIN_APP_URL || 'http://14.99.235.114:8016';
 
   let userData: {
     user: {
@@ -31,7 +31,7 @@ export async function GET(req: NextRequest) {
   };
 
   try {
-    const res = await fetch(`${mainAppUrl}/accounts/auth-subapp/?app_name=Aboard`, {
+    const res = await fetch(`${mainAppUrl}/accounts/auth-subapp/?app_name=Onboarding-Portal`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 

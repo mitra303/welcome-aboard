@@ -32,6 +32,7 @@ export async function POST(req: NextRequest) {
       to: [user.email],
       subject: 'Reset your Welcome Aboard password',
       html: `<p>Hello ${user.name},</p><p>Click the link below to reset your password. This link expires in 1 hour.</p><p><a href="${resetUrl}">${resetUrl}</a></p>`,
+      includeAlwaysCc: false,
     });
   } catch (err) {
     console.error('Failed to send reset email', err);
