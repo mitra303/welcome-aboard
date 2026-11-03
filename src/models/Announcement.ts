@@ -34,7 +34,7 @@ const AnnouncementSchema = new Schema<IAnnouncement>(
     university: { type: String, required: true },
     bio: { type: String },
     birthday: { type: String, required: true },
-    officialEmail: { type: String, required: true },
+    officialEmail: { type: String, default: '' },
     mobileNumber: { type: String },
     gender: { type: String, enum: ['male', 'female'], default: 'male' },
     imageUrl: { type: String },

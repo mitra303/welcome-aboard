@@ -24,7 +24,9 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     return NextResponse.json({ error: parsed.error.issues[0].message }, { status: 400 });
   }
 
-  Object.assign(existing, parsed.data, { officialEmail: parsed.data.officialEmail.toLowerCase() });
+  Object.assign(existing, parsed.data, {
+    officialEmail: (parsed.data.officialEmail || '').toLowerCase(),
+  });
   await existing.save();
 
   return NextResponse.json({ item: existing });

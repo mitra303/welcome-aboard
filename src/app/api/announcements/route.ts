@@ -46,20 +46,24 @@ export async function POST(req: NextRequest) {
 
   await connectDB();
 
-  const existing = await Announcement.findOne({
-    officialEmail: parsed.data.officialEmail.toLowerCase(),
-    status: { $ne: 'draft' },
-  });
-  if (existing) {
-    return NextResponse.json(
-      { error: 'An announcement has already been sent for this employee email.' },
-      { status: 409 }
-    );
+  const officialEmail = (parsed.data.officialEmail || '').toLowerCase();
+
+  if (officialEmail) {
+    const existing = await Announcement.findOne({
+      officialEmail,
+      status: { $ne: 'draft' },
+    });
+    if (existing) {
+      return NextResponse.json(
+        { error: 'An announcement has already been sent for this employee email.' },
+        { status: 409 }
+      );
+    }
   }
 
   const announcement = await Announcement.create({
     ...parsed.data,
-    officialEmail: parsed.data.officialEmail.toLowerCase(),
+    officialEmail,
     createdBy: session.userId,
     status: 'draft',
   });

@@ -60,6 +60,10 @@ export function getWelcomeCardHtml(
   const designation = escapeHtml(data.designation);
   const department = escapeHtml(data.department);
   const manager = escapeHtml(data.reportingManager);
+  const managerLine =
+    data.reportingManager.trim().toLowerCase() === 'plant head'
+      ? manager
+      : `${manager} &ndash; ${department}`;
   const location = escapeHtml(data.officeLocation);
   const qualification = escapeHtml(data.qualification);
   const university = escapeHtml(data.university);
@@ -97,7 +101,7 @@ export function getWelcomeCardHtml(
                       We are pleased to announce that <strong>${title} ${name}</strong> has joined <strong>Mitra Industries</strong> as <strong>${designation} &ndash; ${department}</strong>.
                     </p>
                     <p style="margin:0 0 18px 0;color:${textColor};font-size:19px;line-height:1.5;font-family:${FONT_STACK};">
-                      <strong>${title} ${firstName}</strong> will be based in <strong>${location}</strong> and will report to <strong>${manager} &ndash; ${department}</strong>.
+                      <strong>${title} ${firstName}</strong> will be based in <strong>${location}</strong> and will report to <strong>${managerLine}</strong>.
                     </p>
                     <p style="margin:0 0 18px 0;color:${textColor};font-size:19px;line-height:1.5;font-family:${FONT_STACK};">
                       <strong>${title} ${firstName}</strong> holds a <strong>${qualification} in ${university}</strong>.
@@ -113,7 +117,9 @@ export function getWelcomeCardHtml(
               </table>
             </td>
           </tr>
-          <tr>
+          ${
+            data.officialEmail
+              ? `<tr>
             <td style="padding:28px 40px 24px 40px;">
 <table role="presentation" cellpadding="0" cellspacing="0">
                 <tr>
@@ -122,9 +128,11 @@ export function getWelcomeCardHtml(
                 </tr>
               </table>
             </td>
-          </tr>
+          </tr>`
+              : ''
+          }
           <tr>
-            <td style="padding:0 40px 32px 40px;">
+            <td style="padding:${data.officialEmail ? '0' : '28px'} 40px 32px 40px;">
               <p style="margin:0;color:${headingColor};font-size:19px;font-weight:700;font-family:${FONT_STACK};">A Warm Welcome to the Mitra Family!</p>
             </td>
           </tr>

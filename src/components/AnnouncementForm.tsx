@@ -43,7 +43,7 @@ const FIELDS: { name: keyof AnnouncementFormData; label: string; required?: bool
   { name: 'officeLocation', label: 'Office Location', required: true },
   { name: 'qualification', label: 'Highest Qualification', required: true },
   { name: 'university', label: 'Field of Study', required: true },
-  { name: 'officialEmail', label: 'Official Email', required: true },
+  { name: 'officialEmail', label: 'Official Email' },
 ];
 
 export default function AnnouncementForm({
@@ -295,7 +295,7 @@ export default function AnnouncementForm({
             university: form.university || 'Field of Study',
             bio: form.bio,
             birthday: form.birthday,
-            officialEmail: form.officialEmail || 'employee@mitraindustries.com',
+            officialEmail: form.officialEmail,
             gender: form.gender,
           }}
           imageSrc={imagePreview}

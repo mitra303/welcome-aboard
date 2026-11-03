@@ -26,7 +26,7 @@ export const announcementSchema = z.object({
   university: z.string().min(1, 'Field of study is required'),
   bio: z.string().optional().default(''),
   birthday: z.string().regex(birthdayRegex, 'Birthday must be a valid date (YYYY-MM-DD)'),
-  officialEmail: z.string().email('Enter a valid official email'),
+  officialEmail: z.union([z.string().email('Enter a valid official email'), z.literal('')]).optional(),
   gender: z.enum(['male', 'female']).default('male'),
   imageUrl: z.string().optional(),
 });
