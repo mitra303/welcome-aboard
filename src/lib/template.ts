@@ -61,7 +61,7 @@ export function getWelcomeCardHtml(
   const department = escapeHtml(data.department);
   const manager = escapeHtml(data.reportingManager);
   const managerLine =
-    data.reportingManager.trim().toLowerCase() === 'plant head'
+    ['plant head', 'managing director'].includes(data.reportingManager.trim().toLowerCase())
       ? manager
       : `${manager} &ndash; ${department}`;
   const location = escapeHtml(data.officeLocation);
