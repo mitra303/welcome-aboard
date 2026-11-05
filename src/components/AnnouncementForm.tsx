@@ -41,8 +41,8 @@ const FIELDS: { name: keyof AnnouncementFormData; label: string; required?: bool
   { name: 'department', label: 'Department', required: true },
   { name: 'reportingManager', label: 'Reporting Manager', required: true },
   { name: 'officeLocation', label: 'Office Location', required: true },
-  { name: 'qualification', label: 'Highest Qualification', required: true },
-  { name: 'university', label: 'Field of Study', required: true },
+  { name: 'qualification', label: 'Highest Qualification' },
+  { name: 'university', label: 'Field of Study' },
   { name: 'officialEmail', label: 'Official Email' },
 ];
 
@@ -182,22 +182,29 @@ export default function AnnouncementForm({
         )}
 
         <div className="grid grid-cols-2 gap-3">
-          {FIELDS.map((field) => (
+          {FIELDS.map((field) => {
+            const isManagingDirector = form.reportingManager.trim().toLowerCase() === 'managing director';
+            const required =
+              (field.name === 'qualification' || field.name === 'university')
+                ? !isManagingDirector
+                : field.required;
+            return (
             <div key={field.name} className={field.name === 'employeeName' ? 'col-span-2' : ''}>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 {field.label}
-                {field.required && <span className="text-red-500"> *</span>}
+                {required && <span className="text-red-500"> *</span>}
               </label>
               <input
                 type={field.name === 'officialEmail' ? 'email' : 'text'}
-                required={field.required}
+                required={required}
                 disabled={readOnly}
                 value={form[field.name] as string}
                 onChange={(e) => update(field.name, e.target.value)}
                 className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm disabled:bg-gray-50"
               />
             </div>
-          ))}
+            );
+          })}
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -291,8 +298,8 @@ export default function AnnouncementForm({
             department: form.department || 'Department',
             reportingManager: form.reportingManager || 'Reporting Manager',
             officeLocation: form.officeLocation || 'Office Location',
-            qualification: form.qualification || 'Qualification',
-            university: form.university || 'Field of Study',
+            qualification: form.qualification,
+            university: form.university,
             bio: form.bio,
             birthday: form.birthday,
             officialEmail: form.officialEmail,

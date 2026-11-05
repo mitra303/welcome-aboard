@@ -103,9 +103,13 @@ export function getWelcomeCardHtml(
                     <p style="margin:0 0 18px 0;color:${textColor};font-size:19px;line-height:1.5;font-family:${FONT_STACK};">
                       <strong>${title} ${firstName}</strong> will be based in <strong>${location}</strong> and will report to <strong>${managerLine}</strong>.
                     </p>
-                    <p style="margin:0 0 18px 0;color:${textColor};font-size:19px;line-height:1.5;font-family:${FONT_STACK};">
+                    ${
+                      data.qualification && data.university
+                        ? `<p style="margin:0 0 18px 0;color:${textColor};font-size:19px;line-height:1.5;font-family:${FONT_STACK};">
                       <strong>${title} ${firstName}</strong> holds a <strong>${qualification} in ${university}</strong>.
-                    </p>
+                    </p>`
+                        : ''
+                    }
                     <p style="margin:0 0 20px 0;color:${textColor};font-size:19px;line-height:1.5;font-family:${FONT_STACK};">
                       <strong>Birthday:</strong> ${birthdayStr}
                     </p>
